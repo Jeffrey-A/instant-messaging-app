@@ -1,19 +1,29 @@
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
+import java.awt.GridLayout;
+import java.awt.event.KeyListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
+import javax.swing.JTextPane;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 public class GUI {
 	
 	static GraphicsConfiguration gc;
+	static Container container;
 	
 	public static void main(String[] args){
-		startWindow();
-		startWindow();
-		
+		//startWindow();
+		messageWindow();
 	}
 	
 	public static void startWindow() {
@@ -50,16 +60,15 @@ public class GUI {
 		frame.getContentPane().add(labe2);
 		frame.getContentPane().add(textfield5);
 		frame.getContentPane().add(enterBtn);
-		
-		
 
 		enterBtn.addActionListener(
 				new ActionListener() {
 
 					public void actionPerformed(ActionEvent e) {
 						String ip = textfield1.getText()+"-"+textfield2.getText()+"-"+textfield3.getText()+"-"+ textfield4.getText();
-						System.out.println(ip);
-						handleClick(e);
+						String port = textfield5.getText();
+						messageWindow();
+						
 					}
                 }
 	   );
@@ -71,14 +80,42 @@ public class GUI {
 		
 	}
 	
-//	public void messageWindow() {
-//		JFrame mw = new JFrame("My title");
-//		mw.setSize(200,200);
-//		mv.setVisible(true);
-//		mv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//	}
-	
-	public static void handleClick(ActionEvent e) {
-		System.out.println("It worked");
-	}
+	public static void messageWindow() {
+		JFrame frame = new JFrame("My title");
+	   JTextField messageBar = new JTextField(20);
+		JPanel buttonPanel = new JPanel(new GridLayout(1, 0)); 
+	    JTextPane pane = new JTextPane();
+	    pane.setPreferredSize(new Dimension(350, 425));
+	  
+	    messageBar.addKeyListener(
+	        new KeyListener() {
+	        	
+	        	public void keyTyped(KeyEvent e) {
+	        	        
+	        	}
+	        	
+		        /** Handle the key released event from the text field. */
+		        public void keyReleased(KeyEvent e) {
+		        	if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+		  		      // Enter was pressed. Your code goes here.
+		  			  System.out.println("Enter");
+		  		   }
+		        }
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+	    });
+
+	    buttonPanel.add( messageBar); 
+	    frame.add(pane, BorderLayout.NORTH);
+	    frame.add(buttonPanel,  BorderLayout.CENTER);
+	    
+	    frame.pack();
+	    frame.setVisible(true);
+	    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}	 
+
 }
